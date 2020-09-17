@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.garcia.mariobros.Screens.GameScreen;
 
-public class MarioBros extends Game {
+public class MarioBros extends Game { // from windows
 	public SpriteBatch batch;
 
 	@Override
