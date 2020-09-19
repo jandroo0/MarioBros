@@ -1,8 +1,11 @@
 package com.garcia.mariobros.Sprites;
 
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -18,15 +21,23 @@ public abstract class InteractiveTileObject {
     protected World world;
     protected TiledMap map;
     protected TiledMapTile tile;
+    public static TiledMapTileSet tileSet;
     protected Rectangle bounds;
+    protected MapObject object;
+
     protected Body body;
+    protected GameScreen screen;
 
     protected Fixture fixture;
 
-    public InteractiveTileObject(GameScreen screen, Rectangle bounds) {
+    public InteractiveTileObject(GameScreen screen, MapObject object) {
+        this.screen = screen;
         this.world = screen.getWorld();
         this.map = screen.getMap();
-        this.bounds = bounds;
+        this.object = object;
+        this.bounds = ((RectangleMapObject) object).getRectangle();
+
+        tileSet = map.getTileSets().getTileSet("tileset_gutter");
 
         BodyDef bdef = new BodyDef();
         FixtureDef fdef = new FixtureDef();
@@ -42,7 +53,7 @@ public abstract class InteractiveTileObject {
         fixture = body.createFixture(fdef);
     }
 
-    public abstract void onHeadHit();
+    public abstract void onHeadHit(Mario mario);
 
     public void setCategoryFilter(short filterBit) {
         Filter filter = new Filter();
